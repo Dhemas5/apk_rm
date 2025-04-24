@@ -251,6 +251,7 @@ public class MenuUtama extends javax.swing.JFrame {
         ImageIcon iconMenu = new ImageIcon(getClass().getResource("/Icons/Food Bar1.png"));
         ImageIcon iconPelanggan = new ImageIcon(getClass().getResource("/Icons/Pelanggan.png"));
         ImageIcon iconKategori = new ImageIcon(getClass().getResource("/Icons/Restaurant.png"));
+        ImageIcon iconMeja = new ImageIcon(getClass().getResource("/Icons/Table1.png"));
         ImageIcon iconTransaksi = new ImageIcon(getClass().getResource("/Icons/Transaksi.png"));
 
         Menu_Item masMenu1 = new Menu_Item(null, true, iconPelanggan, "Pelanggan", new ActionListener() {
@@ -271,7 +272,15 @@ public class MenuUtama extends javax.swing.JFrame {
                 pn_utama.revalidate();
             }
         });
-        Menu_Item masMenu3 = new Menu_Item(null, true, iconMenu, "Menu3", null);
+        Menu_Item masMenu3 = new Menu_Item(null, true, iconMeja, "Menu3", new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                pn_utama.removeAll();
+                pn_utama.add(new Form_Meja());
+                pn_utama.repaint();
+                pn_utama.revalidate();
+            }
+        });
 
         Menu_Item transaksi1 = new Menu_Item(null, true, iconTransaksi, "Pembayaran", null);
         Menu_Item transaksi2 = new Menu_Item(null, true, iconTransaksi, "Pengeluaran", null);
