@@ -5,41 +5,19 @@
 package Main;
 
 import Config.Koneksi_dua;
-import Palette.Custom_ButtonRounded;
-import Palette.JTable_Custom;
-import Palette.JTextfieldRounded;
 import Palette.Panelcustom;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.BorderFactory;
-import javax.swing.ButtonGroup;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
 import javax.swing.LayoutStyle;
-import javax.swing.table.DefaultTableModel;
+//dashboard
 
 /**
  *
@@ -54,11 +32,12 @@ public class Form_Dashboard extends javax.swing.JPanel {
     private int DataperHalaman = 14;
     private int totalpages;
 
-    private final Connection con;// Koneksi database
+    private final java.sql.Connection con;// Koneksi database
 
     public Form_Dashboard() {
         con = Koneksi_dua.con();
         initComponents(); // Inisialisasi komponen GUI
+        loadData();
     }
 
     /**
@@ -77,19 +56,19 @@ public class Form_Dashboard extends javax.swing.JPanel {
         panelcustom1 = new Panelcustom();
         jLabel3 = new JLabel();
         jLabel2 = new JLabel();
-        jLabel4 = new JLabel();
+        lb_jumlah_pelanggan = new JLabel();
         panelcustom2 = new Panelcustom();
         jLabel6 = new JLabel();
         jLabel7 = new JLabel();
-        jLabel8 = new JLabel();
+        lb_jumlah_meja = new JLabel();
         panelcustom3 = new Panelcustom();
         jLabel9 = new JLabel();
         jLabel10 = new JLabel();
-        jLabel11 = new JLabel();
+        lb_jumlah_kategori = new JLabel();
         panelcustom4 = new Panelcustom();
         jLabel12 = new JLabel();
         jLabel13 = new JLabel();
-        jLabel14 = new JLabel();
+        lb_jumlah_menu = new JLabel();
         jLabel15 = new JLabel();
 
         setLayout(new CardLayout());
@@ -118,10 +97,10 @@ public class Form_Dashboard extends javax.swing.JPanel {
 
         jLabel2.setIcon(new ImageIcon(getClass().getResource("/IconsDs/Crowd.png"))); // NOI18N
 
-        jLabel4.setBackground(new Color(102, 102, 102));
-        jLabel4.setFont(new Font("SansSerif", 1, 20)); // NOI18N
-        jLabel4.setForeground(new Color(255, 255, 255));
-        jLabel4.setText("100");
+        lb_jumlah_pelanggan.setBackground(new Color(102, 102, 102));
+        lb_jumlah_pelanggan.setFont(new Font("SansSerif", 1, 20)); // NOI18N
+        lb_jumlah_pelanggan.setForeground(new Color(255, 255, 255));
+        lb_jumlah_pelanggan.setText("100");
 
         GroupLayout panelcustom1Layout = new GroupLayout(panelcustom1);
         panelcustom1.setLayout(panelcustom1Layout);
@@ -130,7 +109,7 @@ public class Form_Dashboard extends javax.swing.JPanel {
                 .addGap(17, 17, 17)
                 .addGroup(panelcustom1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel4))
+                    .addComponent(lb_jumlah_pelanggan))
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addGap(17, 17, 17))
@@ -143,7 +122,7 @@ public class Form_Dashboard extends javax.swing.JPanel {
                     .addGroup(panelcustom1Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel4)))
+                        .addComponent(lb_jumlah_pelanggan)))
                 .addContainerGap(21, Short.MAX_VALUE))
         );
 
@@ -157,14 +136,14 @@ public class Form_Dashboard extends javax.swing.JPanel {
         jLabel6.setBackground(new Color(102, 102, 102));
         jLabel6.setFont(new Font("SansSerif", 1, 18)); // NOI18N
         jLabel6.setForeground(new Color(102, 102, 102));
-        jLabel6.setText("Pelanggan");
+        jLabel6.setText("Meja");
 
         jLabel7.setIcon(new ImageIcon(getClass().getResource("/IconsDs/Crowd.png"))); // NOI18N
 
-        jLabel8.setBackground(new Color(102, 102, 102));
-        jLabel8.setFont(new Font("SansSerif", 1, 20)); // NOI18N
-        jLabel8.setForeground(new Color(255, 255, 255));
-        jLabel8.setText("100");
+        lb_jumlah_meja.setBackground(new Color(102, 102, 102));
+        lb_jumlah_meja.setFont(new Font("SansSerif", 1, 20)); // NOI18N
+        lb_jumlah_meja.setForeground(new Color(255, 255, 255));
+        lb_jumlah_meja.setText("100");
 
         GroupLayout panelcustom2Layout = new GroupLayout(panelcustom2);
         panelcustom2.setLayout(panelcustom2Layout);
@@ -173,8 +152,8 @@ public class Form_Dashboard extends javax.swing.JPanel {
                 .addGap(17, 17, 17)
                 .addGroup(panelcustom2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
-                    .addComponent(jLabel8))
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                    .addComponent(lb_jumlah_meja))
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
                 .addComponent(jLabel7)
                 .addGap(17, 17, 17))
         );
@@ -186,7 +165,7 @@ public class Form_Dashboard extends javax.swing.JPanel {
                     .addGroup(panelcustom2Layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel8)))
+                        .addComponent(lb_jumlah_meja)))
                 .addContainerGap(21, Short.MAX_VALUE))
         );
 
@@ -200,14 +179,14 @@ public class Form_Dashboard extends javax.swing.JPanel {
         jLabel9.setBackground(new Color(102, 102, 102));
         jLabel9.setFont(new Font("SansSerif", 1, 18)); // NOI18N
         jLabel9.setForeground(new Color(102, 102, 102));
-        jLabel9.setText("Pelanggan");
+        jLabel9.setText("Kategori");
 
         jLabel10.setIcon(new ImageIcon(getClass().getResource("/IconsDs/Crowd.png"))); // NOI18N
 
-        jLabel11.setBackground(new Color(102, 102, 102));
-        jLabel11.setFont(new Font("SansSerif", 1, 20)); // NOI18N
-        jLabel11.setForeground(new Color(255, 255, 255));
-        jLabel11.setText("100");
+        lb_jumlah_kategori.setBackground(new Color(102, 102, 102));
+        lb_jumlah_kategori.setFont(new Font("SansSerif", 1, 20)); // NOI18N
+        lb_jumlah_kategori.setForeground(new Color(255, 255, 255));
+        lb_jumlah_kategori.setText("100");
 
         GroupLayout panelcustom3Layout = new GroupLayout(panelcustom3);
         panelcustom3.setLayout(panelcustom3Layout);
@@ -216,8 +195,8 @@ public class Form_Dashboard extends javax.swing.JPanel {
                 .addGap(17, 17, 17)
                 .addGroup(panelcustom3Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel9)
-                    .addComponent(jLabel11))
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                    .addComponent(lb_jumlah_kategori))
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addComponent(jLabel10)
                 .addGap(17, 17, 17))
         );
@@ -229,7 +208,7 @@ public class Form_Dashboard extends javax.swing.JPanel {
                     .addGroup(panelcustom3Layout.createSequentialGroup()
                         .addComponent(jLabel9)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel11)))
+                        .addComponent(lb_jumlah_kategori)))
                 .addContainerGap(21, Short.MAX_VALUE))
         );
 
@@ -243,14 +222,14 @@ public class Form_Dashboard extends javax.swing.JPanel {
         jLabel12.setBackground(new Color(102, 102, 102));
         jLabel12.setFont(new Font("SansSerif", 1, 18)); // NOI18N
         jLabel12.setForeground(new Color(102, 102, 102));
-        jLabel12.setText("Pelanggan");
+        jLabel12.setText("Menu");
 
         jLabel13.setIcon(new ImageIcon(getClass().getResource("/IconsDs/Crowd.png"))); // NOI18N
 
-        jLabel14.setBackground(new Color(102, 102, 102));
-        jLabel14.setFont(new Font("SansSerif", 1, 20)); // NOI18N
-        jLabel14.setForeground(new Color(255, 255, 255));
-        jLabel14.setText("100");
+        lb_jumlah_menu.setBackground(new Color(102, 102, 102));
+        lb_jumlah_menu.setFont(new Font("SansSerif", 1, 20)); // NOI18N
+        lb_jumlah_menu.setForeground(new Color(255, 255, 255));
+        lb_jumlah_menu.setText("100");
 
         GroupLayout panelcustom4Layout = new GroupLayout(panelcustom4);
         panelcustom4.setLayout(panelcustom4Layout);
@@ -259,7 +238,7 @@ public class Form_Dashboard extends javax.swing.JPanel {
                 .addGap(17, 17, 17)
                 .addGroup(panelcustom4Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel12)
-                    .addComponent(jLabel14))
+                    .addComponent(lb_jumlah_menu))
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel13)
                 .addGap(17, 17, 17))
@@ -272,7 +251,7 @@ public class Form_Dashboard extends javax.swing.JPanel {
                     .addGroup(panelcustom4Layout.createSequentialGroup()
                         .addComponent(jLabel12)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel14)))
+                        .addComponent(lb_jumlah_menu)))
                 .addContainerGap(21, Short.MAX_VALUE))
         );
 
@@ -296,7 +275,7 @@ public class Form_Dashboard extends javax.swing.JPanel {
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel5)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 256, Short.MAX_VALUE)))
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 330, Short.MAX_VALUE)))
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel15, GroupLayout.PREFERRED_SIZE, 535, GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -332,24 +311,98 @@ public class Form_Dashboard extends javax.swing.JPanel {
     private JPanel content;
     private JLabel jLabel1;
     private JLabel jLabel10;
-    private JLabel jLabel11;
     private JLabel jLabel12;
     private JLabel jLabel13;
-    private JLabel jLabel14;
     private JLabel jLabel15;
     private JLabel jLabel2;
     private JLabel jLabel3;
-    private JLabel jLabel4;
     private JLabel jLabel5;
     private JLabel jLabel6;
     private JLabel jLabel7;
-    private JLabel jLabel8;
     private JLabel jLabel9;
+    private JLabel lb_jumlah_kategori;
+    private JLabel lb_jumlah_meja;
+    private JLabel lb_jumlah_menu;
+    private JLabel lb_jumlah_pelanggan;
     private JPanel main_panel;
     private Panelcustom panelcustom1;
     private Panelcustom panelcustom2;
     private Panelcustom panelcustom3;
     private Panelcustom panelcustom4;
     // End of variables declaration//GEN-END:variables
+  private int jumlahPelanggan() {
+        int totalPelanggan = 0;
 
+        try {
+            String sql = "SELECT COUNT(*) AS total FROM tbl_pelanggan";
+            PreparedStatement st = con.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+
+            if (rs.next()) {
+                totalPelanggan = rs.getInt("total");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return totalPelanggan;
+    }
+
+    private int jumlahMenu() {
+        int totalMenu = 0;
+
+        try {
+            String sql = "SELECT COUNT(*) AS total FROM tbl_menu";
+            PreparedStatement st = con.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+
+            if (rs.next()) {
+                totalMenu = rs.getInt("total");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return totalMenu;
+    }
+
+    private int jumlahMeja() {
+        int totalMeja = 0;
+
+        try {
+            String sql = "SELECT COUNT(*) AS total FROM tbl_meja";
+            PreparedStatement st = con.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+
+            if (rs.next()) {
+                totalMeja = rs.getInt("total");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return totalMeja;
+    }
+
+    private int jumlahKategori() {
+        int totalKategori = 0;
+
+        try {
+            String sql = "SELECT COUNT(*) AS total FROM tbl_kategori";
+            PreparedStatement st = con.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+
+            if (rs.next()) {
+                totalKategori = rs.getInt("total");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return totalKategori;
+    }
+
+    private void loadData() {
+        lb_jumlah_pelanggan.setText(String.valueOf(jumlahPelanggan()));
+        lb_jumlah_meja.setText(String.valueOf(jumlahMeja()));
+        lb_jumlah_menu.setText(String.valueOf(jumlahMenu()));
+        lb_jumlah_kategori.setText(String.valueOf(jumlahKategori()));
+//        lb_jumlah_rental.setText("");
+    }
 }

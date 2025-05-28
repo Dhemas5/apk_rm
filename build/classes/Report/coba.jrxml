@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Coba" language="groovy" pageWidth="203" pageHeight="1000" columnWidth="203" leftMargin="0" rightMargin="0" topMargin="7" bottomMargin="7" isIgnorePagination="true" uuid="a6f94bd3-d94e-477d-bc4c-a01ff83ac70f">
+	<property name="ireport.zoom" value="2.3579476910000023"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="291"/>
+	<parameter name="ID_Transaksi" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT tr.ID_Transaksi,
+plg.Nama_Pelanggan,
+tr.Tanggal_Transaksi,
+usr.Nama_User,
+mj.Nomor_Meja,
+mn.Nama_Menu,
+mn.Harga, det.Jumlah_Beli,
+det.Sub_Total,
+tr.Total,
+tr.Bayar,
+tr.Kembalian
+FROM tbl_transaksi tr
+INNER JOIN tbl_detail_transaksi det ON det.ID_Transaksi = tr.ID_Transaksi
+INNER JOIN tbl_pelanggan plg ON plg.ID_Pelanggan = tr.ID_Pelanggan
+INNER JOIN tbl_user usr ON usr.ID_User = tr.ID_User
+INNER JOIN tbl_meja mj ON mj.ID_Meja = tr.ID_Meja
+INNER JOIN tbl_menu mn ON mn.ID_Menu = det.ID_Menu
+WHERE tr.ID_Transaksi = $P{ID_Transaksi}]]>
+	</queryString>
+	<field name="ID_Transaksi" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Nama_Pelanggan" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Tanggal_Transaksi" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Nama_User" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Nomor_Meja" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Nama_Menu" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Harga" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Jumlah_Beli" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Sub_Total" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Total" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Bayar" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Kembalian" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="Sub_Total" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{Sub_Total}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="81" splitType="Stretch">
+			<image>
+				<reportElement x="87" y="0" width="30" height="30" uuid="96b5e73d-18e8-4519-bf68-d45ece2b95e9"/>
+				<imageExpression><![CDATA["../Image/Kanyaah.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="42" y="30" width="122" height="20" uuid="ec0de0bb-ba07-4bfd-8f60-1af17cbac84f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Berlin Sans FB Demi"/>
+				</textElement>
+				<text><![CDATA[Rumah Makan Hj.Yati]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="50" width="145" height="20" uuid="67eee5a5-b44e-4208-81c4-3bf645f3bff9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="6"/>
+				</textElement>
+				<text><![CDATA[Jl. PB.Sudirman, Racekan, Pringgowirawan, Kec. Sumberbaru, Kabupaten Jember, Jawa Timur 68156]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="76" width="204" height="1" uuid="b60ba78b-f565-48d7-8d42-433714e6438a"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="53" splitType="Stretch">
+			<textField>
+				<reportElement x="57" y="0" width="68" height="12" uuid="36624e4b-119d-4a4f-8d2f-3a44c2b77784"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ID_Transaksi}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="57" y="17" width="68" height="10" uuid="6637f00f-862d-47ca-8e1b-bc215c2fba6b"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Nama_User}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="57" y="27" width="68" height="10" uuid="bf182b74-9716-4d38-b973-10b36f46c0d2"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Nama_Pelanggan}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="52" width="204" height="1" uuid="1bf8c1e3-2556-4b29-b2da-b4d6f1f0c1cf"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="144" y="0" width="55" height="11" uuid="f46da0f1-989e-42e1-bae3-3b875aeb5376"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Tanggal_Transaksi}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="7" y="0" width="50" height="11" uuid="0cb6f326-4a6b-4280-aae2-2a3441d2197b"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[No  Nota    :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="7" y="27" width="50" height="10" uuid="269ed3d3-8ccb-41ef-a948-f66811dd9865"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Pelanggan	:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="7" y="17" width="50" height="10" uuid="4055c005-5637-4998-a98c-edcb8c2b7845"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Kasir          :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="57" y="37" width="68" height="10" uuid="1a84e9e6-8bc0-4af1-9bd8-3ea7faf3b7f5"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Nomor_Meja}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="7" y="37" width="50" height="10" uuid="f3747f7d-6f24-4dcd-8a90-253ea7f57f9b"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[No Meja	:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="11" width="204" height="1" uuid="cef6cc3d-2ca3-40ce-9a20-8ddac7b43b49"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="31" splitType="Stretch">
+			<textField>
+				<reportElement x="7" y="0" width="87" height="20" uuid="bac29788-a456-49a8-b023-d0f3639bd3aa"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Courier New" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Nama_Menu}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="7" y="21" width="87" height="10" uuid="ba9545df-d0a6-4816-94a1-a8982df6459b"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Courier New" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Jumlah_Beli} + " x " + String.format("%,.2f", Double.parseDouble($F{Harga}))]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="125" y="21" width="74" height="10" uuid="f4b7c1bf-2f1e-499f-ad70-39e5cf2a1ba5"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Courier New" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Rp. " + String.format("%,d", $F{Sub_Total}.intValue())]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="92" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="5" width="204" height="1" uuid="9c870fe6-cf09-4ec8-9b31-9328830027e0"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="125" y="30" width="74" height="15" uuid="fdfa77ba-924a-4de7-b277-0235b452cced"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Courier New" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Rp. " + String.format("%,d", $F{Bayar}.intValue())]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="125" y="45" width="74" height="15" uuid="341f3738-6d76-44b9-8377-c2de0e517584"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Courier New" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Rp. " + String.format("%,d", $F{Kembalian}.intValue())]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="7" y="30" width="68" height="15" uuid="4ca18e68-36a3-4610-b1ce-b0be95260004"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Courier New" size="8"/>
+				</textElement>
+				<text><![CDATA[Bayar	  :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="7" y="45" width="68" height="15" uuid="29690327-4dd1-419f-bfcf-8ff24c86a295"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Courier New" size="8"/>
+				</textElement>
+				<text><![CDATA[Kembali	  :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="125" y="9" width="74" height="18" uuid="f52637f2-cfea-4c88-8b99-5ce0b069cdd8"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Courier New" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Rp. " + String.format("%,d", $F{Total}.intValue())]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="7" y="8" width="68" height="19" uuid="e5bc221e-2f71-4a0b-8705-454137c1cd93"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Courier New" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total	 :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="61" width="134" height="8" uuid="1605d191-eadb-4203-8ba5-6207f7657c7a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="5"/>
+				</textElement>
+				<text><![CDATA[Terima kasih telah makan di Rumah Makan Kami]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="69" width="134" height="8" uuid="71a32872-f547-4308-8027-186713c95d06"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="5"/>
+				</textElement>
+				<text><![CDATA[Ingin pesan catering untuk acara spesial?]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="77" width="134" height="8" uuid="dd4410a7-33f1-49e6-b4cf-8dd4bf42f72f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="5"/>
+				</textElement>
+				<text><![CDATA[Hubungi kami WA 0812-3456-7890]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="7" width="204" height="1" uuid="8749b5fb-29e7-4311-9ad8-707d88e04399"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="0" y="27" width="204" height="1" uuid="502ed8f2-aca2-42df-b20a-3f236f2b307b"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="0" y="29" width="204" height="1" uuid="69f982da-475a-4cea-851f-014e307355e0"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="0" y="60" width="204" height="1" uuid="5001b01e-69c7-44df-bb42-6486c11cfd6b"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+		</band>
+	</summary>
+</jasperReport>

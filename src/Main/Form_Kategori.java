@@ -124,9 +124,9 @@ public class Form_Kategori extends javax.swing.JPanel {
 
         btn_cancel.setIcon(new ImageIcon(getClass().getResource("/Icons/Close5.png"))); // NOI18N
         btn_cancel.setText("Batal");
-        btn_cancel.setFillClick(new Color(153, 51, 0));
-        btn_cancel.setFillOriginal(new Color(255, 153, 51));
-        btn_cancel.setFillOver(new Color(204, 102, 0));
+        btn_cancel.setFillClick(new Color(102, 204, 255));
+        btn_cancel.setFillOriginal(new Color(0, 204, 204));
+        btn_cancel.setFillOver(new Color(0, 153, 153));
         btn_cancel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 btn_cancelActionPerformed(evt);
@@ -167,7 +167,7 @@ public class Form_Kategori extends javax.swing.JPanel {
         jLabel4.setIcon(new ImageIcon(getClass().getResource("/Icons/Restaurant.png"))); // NOI18N
 
         jLabel5.setFont(new Font("Times New Roman", 1, 18)); // NOI18N
-        jLabel5.setIcon(new ImageIcon(getClass().getResource("/Icons/Dashboard Layout.png"))); // NOI18N
+        jLabel5.setIcon(new ImageIcon(getClass().getResource("/Icons/Sorting.png"))); // NOI18N
         jLabel5.setText(" >");
 
         btn_first.setText("First Page");
@@ -320,7 +320,7 @@ public class Form_Kategori extends javax.swing.JPanel {
         jLabel7.setIcon(new ImageIcon(getClass().getResource("/Icons/Restaurant.png"))); // NOI18N
 
         jLabel8.setFont(new Font("Times New Roman", 1, 18)); // NOI18N
-        jLabel8.setIcon(new ImageIcon(getClass().getResource("/Icons/Dashboard Layout.png"))); // NOI18N
+        jLabel8.setIcon(new ImageIcon(getClass().getResource("/Icons/Sorting.png"))); // NOI18N
         jLabel8.setText(" >");
 
         jLabel9.setFont(new Font("SansSerif", 1, 14)); // NOI18N
@@ -355,18 +355,20 @@ public class Form_Kategori extends javax.swing.JPanel {
                         .addGap(12, 12, 12))
                     .addGroup(tambah_kategoriLayout.createSequentialGroup()
                         .addGroup(tambah_kategoriLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel13)
-                            .addComponent(jLabel9)
-                            .addComponent(txt_id, GroupLayout.PREFERRED_SIZE, 358, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_Deskripsi, GroupLayout.PREFERRED_SIZE, 358, GroupLayout.PREFERRED_SIZE))
-                        .addGap(88, 88, 88)
-                        .addGroup(tambah_kategoriLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel10)
-                            .addComponent(txt_nama, GroupLayout.PREFERRED_SIZE, 358, GroupLayout.PREFERRED_SIZE)
                             .addGroup(tambah_kategoriLayout.createSequentialGroup()
                                 .addComponent(btn_simpan, GroupLayout.PREFERRED_SIZE, 106, GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(btn_batal, GroupLayout.PREFERRED_SIZE, 93, GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(btn_batal, GroupLayout.PREFERRED_SIZE, 93, GroupLayout.PREFERRED_SIZE))
+                            .addGroup(tambah_kategoriLayout.createSequentialGroup()
+                                .addGroup(tambah_kategoriLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel13)
+                                    .addComponent(jLabel9)
+                                    .addComponent(txt_id, GroupLayout.PREFERRED_SIZE, 358, GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txt_Deskripsi, GroupLayout.PREFERRED_SIZE, 358, GroupLayout.PREFERRED_SIZE))
+                                .addGap(88, 88, 88)
+                                .addGroup(tambah_kategoriLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel10)
+                                    .addComponent(txt_nama, GroupLayout.PREFERRED_SIZE, 358, GroupLayout.PREFERRED_SIZE))))
                         .addGap(0, 169, Short.MAX_VALUE))))
         );
         tambah_kategoriLayout.setVerticalGroup(tambah_kategoriLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -389,15 +391,14 @@ public class Form_Kategori extends javax.swing.JPanel {
                         .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txt_nama, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addGroup(tambah_kategoriLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                    .addGroup(tambah_kategoriLayout.createSequentialGroup()
-                        .addComponent(jLabel13)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txt_Deskripsi, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                    .addGroup(tambah_kategoriLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(btn_simpan, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btn_batal, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(330, Short.MAX_VALUE))
+                .addComponent(jLabel13)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txt_Deskripsi, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(tambah_kategoriLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_simpan, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_batal, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(268, Short.MAX_VALUE))
         );
 
         main_panel.add(tambah_kategori, "card2");
@@ -750,7 +751,7 @@ public class Form_Kategori extends javax.swing.JPanel {
         data_kategori.setVisible(false); // Menyembunyikan panel view
         tambah_kategori.setVisible(true); // Menampilkan panel tambah/edit
 
-        jLabel7.setText("PERBARUI DATA Kategori"); // Mengubah teks label menjadi "PERBARUI DATA Kategori"
+        jLabel2.setText("PERBARUI DATA"); // Mengubah teks label menjadi "PERBARUI DATA Kategori"
         txt_id.setEnabled(false); // Menonaktifkan field ID Kategori agar tidak bisa diedit
 
         // Mengisi field form dengan data dari baris yang dipilih

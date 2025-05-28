@@ -129,7 +129,7 @@ public class Form_Pelanggan extends javax.swing.JPanel {
 
         btn_cancel.setIcon(new ImageIcon(getClass().getResource("/Icons/Close5.png"))); // NOI18N
         btn_cancel.setText("Batal");
-        btn_cancel.setFillClick(new Color(153, 51, 0));
+        btn_cancel.setFillClick(new Color(102, 204, 255));
         btn_cancel.setFillOriginal(new Color(255, 153, 51));
         btn_cancel.setFillOver(new Color(204, 102, 0));
         btn_cancel.addActionListener(new ActionListener() {
@@ -172,7 +172,7 @@ public class Form_Pelanggan extends javax.swing.JPanel {
         jLabel4.setIcon(new ImageIcon(getClass().getResource("/Icons/pelanggan.png"))); // NOI18N
 
         jLabel5.setFont(new Font("Times New Roman", 1, 18)); // NOI18N
-        jLabel5.setIcon(new ImageIcon(getClass().getResource("/Icons/Dashboard Layout.png"))); // NOI18N
+        jLabel5.setIcon(new ImageIcon(getClass().getResource("/Icons/Sorting.png"))); // NOI18N
         jLabel5.setText(" >");
 
         btn_first.setText("First Page");
@@ -325,7 +325,7 @@ public class Form_Pelanggan extends javax.swing.JPanel {
         jLabel7.setIcon(new ImageIcon(getClass().getResource("/Icons/pelanggan.png"))); // NOI18N
 
         jLabel8.setFont(new Font("Times New Roman", 1, 18)); // NOI18N
-        jLabel8.setIcon(new ImageIcon(getClass().getResource("/Icons/Dashboard Layout.png"))); // NOI18N
+        jLabel8.setIcon(new ImageIcon(getClass().getResource("/Icons/Sorting.png"))); // NOI18N
         jLabel8.setText(" >");
 
         jLabel9.setFont(new Font("SansSerif", 1, 14)); // NOI18N
@@ -372,25 +372,27 @@ public class Form_Pelanggan extends javax.swing.JPanel {
                         .addGap(12, 12, 12))
                     .addGroup(tambah_pelangganLayout.createSequentialGroup()
                         .addGroup(tambah_pelangganLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel13)
-                            .addComponent(jLabel9)
-                            .addComponent(txt_id, GroupLayout.PREFERRED_SIZE, 358, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel11)
-                            .addComponent(txt_alamat, GroupLayout.PREFERRED_SIZE, 358, GroupLayout.PREFERRED_SIZE)
-                            .addGroup(tambah_pelangganLayout.createSequentialGroup()
-                                .addComponent(rb_laki)
-                                .addGap(18, 18, 18)
-                                .addComponent(rb_perempuan)))
-                        .addGap(88, 88, 88)
-                        .addGroup(tambah_pelangganLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel10)
-                            .addComponent(txt_nama, GroupLayout.PREFERRED_SIZE, 358, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel12)
-                            .addComponent(txt_nohp, GroupLayout.PREFERRED_SIZE, 358, GroupLayout.PREFERRED_SIZE)
                             .addGroup(tambah_pelangganLayout.createSequentialGroup()
                                 .addComponent(btn_simpan, GroupLayout.PREFERRED_SIZE, 106, GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(btn_batal, GroupLayout.PREFERRED_SIZE, 93, GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(btn_batal, GroupLayout.PREFERRED_SIZE, 93, GroupLayout.PREFERRED_SIZE))
+                            .addGroup(tambah_pelangganLayout.createSequentialGroup()
+                                .addGroup(tambah_pelangganLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel13)
+                                    .addComponent(jLabel9)
+                                    .addComponent(txt_id, GroupLayout.PREFERRED_SIZE, 358, GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel11)
+                                    .addComponent(txt_alamat, GroupLayout.PREFERRED_SIZE, 358, GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(tambah_pelangganLayout.createSequentialGroup()
+                                        .addComponent(rb_laki)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(rb_perempuan)))
+                                .addGap(88, 88, 88)
+                                .addGroup(tambah_pelangganLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel10)
+                                    .addComponent(txt_nama, GroupLayout.PREFERRED_SIZE, 358, GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel12)
+                                    .addComponent(txt_nohp, GroupLayout.PREFERRED_SIZE, 358, GroupLayout.PREFERRED_SIZE))))
                         .addGap(0, 169, Short.MAX_VALUE))))
         );
         tambah_pelangganLayout.setVerticalGroup(tambah_pelangganLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -425,14 +427,15 @@ public class Form_Pelanggan extends javax.swing.JPanel {
                         .addGap(17, 17, 17)
                         .addComponent(jLabel13)
                         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(tambah_pelangganLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                            .addComponent(txt_alamat, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn_simpan, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn_batal, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txt_alamat, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                     .addGroup(tambah_pelangganLayout.createSequentialGroup()
                         .addGap(5, 5, 5)
                         .addComponent(txt_nohp, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(261, Short.MAX_VALUE))
+                .addGap(26, 26, 26)
+                .addGroup(tambah_pelangganLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_simpan, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_batal, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(203, Short.MAX_VALUE))
         );
 
         main_panel.add(tambah_pelanggan, "card2");

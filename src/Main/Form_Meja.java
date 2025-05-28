@@ -122,9 +122,9 @@ public class Form_Meja extends javax.swing.JPanel {
 
         btn_cancel.setIcon(new ImageIcon(getClass().getResource("/Icons/Close5.png"))); // NOI18N
         btn_cancel.setText("Batal");
-        btn_cancel.setFillClick(new Color(153, 51, 0));
-        btn_cancel.setFillOriginal(new Color(255, 153, 51));
-        btn_cancel.setFillOver(new Color(204, 102, 0));
+        btn_cancel.setFillClick(new Color(102, 204, 255));
+        btn_cancel.setFillOriginal(new Color(0, 204, 204));
+        btn_cancel.setFillOver(new Color(0, 153, 153));
         btn_cancel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 btn_cancelActionPerformed(evt);
@@ -165,7 +165,7 @@ public class Form_Meja extends javax.swing.JPanel {
         jLabel4.setIcon(new ImageIcon(getClass().getResource("/Icons/Table1.png"))); // NOI18N
 
         jLabel5.setFont(new Font("Times New Roman", 1, 18)); // NOI18N
-        jLabel5.setIcon(new ImageIcon(getClass().getResource("/Icons/Dashboard Layout.png"))); // NOI18N
+        jLabel5.setIcon(new ImageIcon(getClass().getResource("/Icons/Sorting.png"))); // NOI18N
         jLabel5.setText(" >");
 
         btn_first.setText("First Page");
@@ -318,7 +318,7 @@ public class Form_Meja extends javax.swing.JPanel {
         jLabel7.setIcon(new ImageIcon(getClass().getResource("/Icons/Table1.png"))); // NOI18N
 
         jLabel8.setFont(new Font("Times New Roman", 1, 18)); // NOI18N
-        jLabel8.setIcon(new ImageIcon(getClass().getResource("/Icons/Dashboard Layout.png"))); // NOI18N
+        jLabel8.setIcon(new ImageIcon(getClass().getResource("/Icons/Sorting.png"))); // NOI18N
         jLabel8.setText(" >");
 
         jLabel9.setFont(new Font("SansSerif", 1, 14)); // NOI18N
@@ -348,16 +348,18 @@ public class Form_Meja extends javax.swing.JPanel {
                         .addGap(12, 12, 12))
                     .addGroup(tambah_mejaLayout.createSequentialGroup()
                         .addGroup(tambah_mejaLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel9)
-                            .addComponent(txt_id, GroupLayout.PREFERRED_SIZE, 358, GroupLayout.PREFERRED_SIZE))
-                        .addGap(88, 88, 88)
-                        .addGroup(tambah_mejaLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel10)
-                            .addComponent(txt_nama, GroupLayout.PREFERRED_SIZE, 358, GroupLayout.PREFERRED_SIZE)
                             .addGroup(tambah_mejaLayout.createSequentialGroup()
                                 .addComponent(btn_simpan, GroupLayout.PREFERRED_SIZE, 106, GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(btn_batal, GroupLayout.PREFERRED_SIZE, 93, GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(btn_batal, GroupLayout.PREFERRED_SIZE, 93, GroupLayout.PREFERRED_SIZE))
+                            .addGroup(tambah_mejaLayout.createSequentialGroup()
+                                .addGroup(tambah_mejaLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel9)
+                                    .addComponent(txt_id, GroupLayout.PREFERRED_SIZE, 358, GroupLayout.PREFERRED_SIZE))
+                                .addGap(88, 88, 88)
+                                .addGroup(tambah_mejaLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel10)
+                                    .addComponent(txt_nama, GroupLayout.PREFERRED_SIZE, 358, GroupLayout.PREFERRED_SIZE))))
                         .addGap(0, 169, Short.MAX_VALUE))))
         );
         tambah_mejaLayout.setVerticalGroup(tambah_mejaLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -379,11 +381,11 @@ public class Form_Meja extends javax.swing.JPanel {
                         .addComponent(jLabel10)
                         .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txt_nama, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-                .addGap(37, 37, 37)
+                .addGap(18, 18, 18)
                 .addGroup(tambah_mejaLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_simpan, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_batal, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(330, Short.MAX_VALUE))
+                .addContainerGap(349, Short.MAX_VALUE))
         );
 
         main_panel.add(tambah_meja, "card2");
@@ -402,7 +404,7 @@ public class Form_Meja extends javax.swing.JPanel {
         main_panel.revalidate();
 
         try {
-            txt_id.setText(setIDKategori()); // Menyiapkan ID pelanggan baru secara otomatis
+            txt_id.setText(setIDMeja()); // Menyiapkan ID pelanggan baru secara otomatis
             if (btn_tambah.getText().equals("UBAH")) { // Jika tombol menunjukkan "UBAH"
                 dataTabel(); // Memuat data pelanggan yang dipilih ke form
                 btn_simpan.setText("PERBARUI"); // Ubah teks tombol simpan menjadi perbarui
@@ -434,11 +436,6 @@ public class Form_Meja extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_cbx_dataActionPerformed
 
-    private void btn_cancelActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btn_cancelActionPerformed
-        showPanel();
-        loadData();
-    }//GEN-LAST:event_btn_cancelActionPerformed
-
     private void tbl_dataMouseClicked(MouseEvent evt) {//GEN-FIRST:event_tbl_dataMouseClicked
         btn_tambah.setText("UBAH"); // Ubah tombol tambah menjadi "UBAH"
         btn_simpan.setText("PERBARUI"); // Ubah tombol simpan menjadi "PERBARUI"
@@ -462,6 +459,11 @@ public class Form_Meja extends javax.swing.JPanel {
             updateData(); // Memperbarui data pelanggan yang sudah ada
         }
     }//GEN-LAST:event_btn_simpanActionPerformed
+
+    private void btn_cancelActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btn_cancelActionPerformed
+        showPanel();
+        loadData();
+    }//GEN-LAST:event_btn_cancelActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -496,8 +498,7 @@ public class Form_Meja extends javax.swing.JPanel {
     private JTextfieldRounded txt_nama;
     private JTextfieldRounded txt_search;
     // End of variables declaration//GEN-END:variables
- // pagination() - Mengatur fungsi pagination untuk Kategori
-    private void pagination() {
+ private void pagination() {
         // Mengatur tombol halaman pertama
         btn_first.addActionListener(e -> {
             HalamanSaatIni = 1;// Set ke halaman pertama
@@ -544,7 +545,7 @@ public class Form_Meja extends javax.swing.JPanel {
     private int getTotalData() {
         int totalData = 0;
         try {
-            String sql = "SELECT COUNT(*) AS total FROM tbl_kategori";// Query menghitung total data Kategori
+            String sql = "SELECT COUNT(*) AS total FROM tbl_meja";// Query menghitung total data Kategori
             try (PreparedStatement st = con.prepareStatement(sql)) {
                 ResultSet rs = st.executeQuery(); // Eksekusi query
                 if (rs.next()) {
@@ -587,9 +588,7 @@ public class Form_Meja extends javax.swing.JPanel {
     private void setTabelModel() {
         String[] columnNames = {
             "ID",
-            "Nama",
-            "Deskripsi"
-        };
+            "Nomor",};
         DefaultTableModel model = new DefaultTableModel(columnNames, 0); // Membuat model tabel dengan kolom yang ditentukan
         tbl_data.setModel(model); // Mengatur model tabel untuk JTable
         loadData(); // Memuat data ke dalam tabel
@@ -600,18 +599,17 @@ public class Form_Meja extends javax.swing.JPanel {
         model.setRowCount(0); // Mengosongkan data yang ada di tabel
 
         try {
-            String sql = "SELECT * FROM tbl_kategori LIMIT ?,?"; // Query dengan limit berdasarkan halaman
+            String sql = "SELECT * FROM tbl_meja LIMIT ?,?"; // Query dengan limit berdasarkan halaman
             try (PreparedStatement st = con.prepareStatement(sql)) {
                 st.setInt(1, startIndex); // Indeks awal
                 st.setInt(2, entriesPage); // Jumlah data per halaman
                 ResultSet rs = st.executeQuery(); // Eksekusi query
 
                 while (rs.next()) {
-                    String IdKategori = rs.getString("ID_Kategori");
-                    String NamaKategori = rs.getString("Nama_Kategori");
-                    String deskripsiKategori = rs.getString("Deskripsi");
+                    String IdMeja = rs.getString("ID_Meja");
+                    String NomorMeja = rs.getString("Nomor_Meja");
 
-                    Object[] rowData = {IdKategori, NamaKategori, deskripsiKategori}; // Data Kategori
+                    Object[] rowData = {IdMeja, NomorMeja}; // Data Kategori
                     model.addRow(rowData); // Menambahkan baris data ke dalam tabel
                 }
             }
@@ -622,13 +620,13 @@ public class Form_Meja extends javax.swing.JPanel {
     }
 
     // setIDKategori() - Mengatur ID Kategori secara otomatis
-    private String setIDKategori() throws SQLException {
+    private String setIDMeja() throws SQLException {
         String urutan = null;
         Date now = new Date();
         SimpleDateFormat noFormat = new SimpleDateFormat("yyMM"); // Format tanggal sebagai bagian dari ID
         String no = noFormat.format(now);
 
-        String sql = "SELECT RIGHT(ID_Kategori, 3) AS Nomor FROM tbl_kategori WHERE ID_Kategori LIKE '" + no + "%' ORDER BY ID_Kategori DESC LIMIT 1";
+        String sql = "SELECT RIGHT(ID_Meja, 3) AS Nomor FROM tbl_meja WHERE ID_Meja LIKE '" + no + "%' ORDER BY ID_Meja DESC LIMIT 1";
 
         try (PreparedStatement st = con.prepareStatement(sql)) {
             ResultSet rs = st.executeQuery(); // Eksekusi query
@@ -653,13 +651,13 @@ public class Form_Meja extends javax.swing.JPanel {
         boolean valid = false;
 
         // Mengambil data dari form
-        String IdKategori = txt_id.getText(); // ID kategori yang diinput pengguna
-        String NamaKategori = txt_nama.getText(); // Nama kategori yang diinput pengguna
+        String IdMeja = txt_id.getText(); // ID kategori yang diinput pengguna
+        String NomorMeja = txt_nama.getText(); // Nama kategori yang diinput pengguna
 
         // Query SQL untuk memeriksa apakah nama kategori sudah ada di database,
         // kecuali untuk kategori dengan ID yang sedang diupdate (ID_Kategori != IdKategori)
         // Menggunakan LIKE BINARY agar pencarian bersifat case-sensitive
-        String sql = "SELECT Nama_Kategori FROM tbl_kategori WHERE ID_Kategori!='" + IdKategori + "' AND Nama_Kategori LIKE BINARY '" + NamaKategori + "'";
+        String sql = "SELECT Nomor_Meja FROM tbl_meja WHERE ID_Meja!='" + IdMeja + "' AND Nomor_Meja LIKE BINARY '" + NomorMeja + "'";
 
         try (PreparedStatement st = con.prepareStatement(sql)) {
             // Eksekusi query
@@ -669,7 +667,7 @@ public class Form_Meja extends javax.swing.JPanel {
             if (rs.next()) {
                 // Jika ada data, berarti nama kategori sudah ada
                 JOptionPane.showMessageDialog(this,
-                        "Nama Kategori sudah ada\nSilahkan input nama kategori yang berbeda",
+                        "Nomor Meja sudah ada\nSilahkan input Nomor Meja yang berbeda",
                         "Peringatan",
                         JOptionPane.WARNING_MESSAGE);
             } else {
@@ -687,11 +685,11 @@ public class Form_Meja extends javax.swing.JPanel {
 
     // insertData() - Menambahkan data Kategori ke database
     private void insertData() {
-        String IdKategori = txt_id.getText();
-        String NamaKategori = txt_nama.getText();
+        String IdMeja = txt_id.getText();
+        String NomorMeja = txt_nama.getText();
 
         // Validasi input data
-        if (IdKategori.isEmpty() || NamaKategori.isEmpty()) {
+        if (IdMeja.isEmpty() || NomorMeja.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Semua Kolom Harus Diisi!", "Validasi", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -702,10 +700,10 @@ public class Form_Meja extends javax.swing.JPanel {
 
         // Insert data ke database
         try {
-            String sql = "INSERT INTO tbl_kategori (ID_Kategori, Nama_Kategori, Deskripsi) VALUES (?,?,?)";
+            String sql = "INSERT INTO tbl_meja (ID_Meja, Nomor_Meja) VALUES (?,?)";
             try (PreparedStatement st = con.prepareStatement(sql)) {
-                st.setString(1, IdKategori);
-                st.setString(2, NamaKategori);
+                st.setString(1, IdMeja);
+                st.setString(2, NomorMeja);
 
                 int rowInserted = st.executeUpdate();// Menjalankan perintah insert
                 if (rowInserted > 0) {
@@ -731,7 +729,7 @@ public class Form_Meja extends javax.swing.JPanel {
         data_meja.setVisible(false); // Menyembunyikan panel view
         tambah_meja.setVisible(true); // Menampilkan panel tambah/edit
 
-        jLabel7.setText("PERBARUI DATA Kategori"); // Mengubah teks label menjadi "PERBARUI DATA Kategori"
+        jLabel2.setText("Perbarui Data"); // Mengubah teks label menjadi "PERBARUI DATA Kategori"
         txt_id.setEnabled(false); // Menonaktifkan field ID Kategori agar tidak bisa diedit
 
         // Mengisi field form dengan data dari baris yang dipilih
@@ -742,21 +740,21 @@ public class Form_Meja extends javax.swing.JPanel {
     // updateData() - Memperbarui data Kategori di database
     private void updateData() {
         // Mengambil data dari form
-        String IdKategori = txt_id.getText();
-        String NamaKategori = txt_nama.getText();
+        String IdMeja = txt_id.getText();
+        String NomorMeja = txt_nama.getText();
 
         // Validasi input data
-        if (IdKategori.isEmpty() || NamaKategori.isEmpty()) {
+        if (IdMeja.isEmpty() || NomorMeja.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Semua Kolom Harus Diisi!", "Validasi", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         // Insert data ke database
         try {
-            String sql = "UPDATE tbl_kategori SET Nama_Kategori=?, Deskripsi=? WHERE ID_Kategori=?";
+            String sql = "UPDATE tbl_meja SET Nomor_Meja=? WHERE ID_Meja=?";
             try (PreparedStatement st = con.prepareStatement(sql)) {
-                st.setString(1, NamaKategori);
-                st.setString(3, IdKategori);
+                st.setString(1, NomorMeja);
+                st.setString(2, IdMeja);
 
                 int rowUpdated = st.executeUpdate();
                 if (rowUpdated > 0) {
@@ -779,15 +777,15 @@ public class Form_Meja extends javax.swing.JPanel {
             return; // Keluar dari metode
         }
 
-        String IdKategori = tbl_data.getValueAt(row, 0).toString(); // Mendapatkan ID Kategori dari baris yang dipilih
+        String IdMeja = tbl_data.getValueAt(row, 0).toString(); // Mendapatkan ID Kategori dari baris yang dipilih
 
         // Konfirmasi penghapusan
         int confirm = JOptionPane.showConfirmDialog(this, "Apakah Anda Yakin Menghapus Data Ini?", "Konfirmasi", JOptionPane.YES_NO_OPTION);
         if (confirm == JOptionPane.YES_OPTION) {
             try {
-                String sql = "DELETE FROM tbl_kategori WHERE ID_Kategori=?";
+                String sql = "DELETE FROM tbl_meja WHERE ID_Meja=?";
                 try (PreparedStatement st = con.prepareStatement(sql)) {
-                    st.setString(1, IdKategori);
+                    st.setString(1, IdMeja);
 
                     int rowDeleted = st.executeUpdate(); // Eksekusi penghapusan
                     if (rowDeleted > 0) {
@@ -809,19 +807,17 @@ public class Form_Meja extends javax.swing.JPanel {
         model.setRowCount(0);// Mengosongkan data di tabel sebelum memuat hasil pencarian
 
         try {
-            String sql = "SELECT * FROM tbl_kategori WHERE Nama_Kategori LIKE ? OR Deskripsi LIKE ?";
+            String sql = "SELECT * FROM tbl_meja WHERE Nomor_Meja LIKE ? ";
             try (PreparedStatement st = con.prepareStatement(sql)) {
                 st.setString(1, "%" + kataKunci + "%"); // Parameter pencarian pada kolom Nama
-                st.setString(2, "%" + kataKunci + "%");// Parameter pencarian pada kolom Alamat
 
                 ResultSet rs = st.executeQuery();
 
                 while (rs.next()) {
-                    String IdKategori = rs.getString("ID_Kategori");
-                    String NamaKategori = rs.getString("Nama_Kategori");
-                    String deskripsiKategori = rs.getString("Deskripsi");
+                    String IdMeja = rs.getString("ID_Meja");
+                    String NomorMeja = rs.getString("Nomor_Meja");
 
-                    Object[] rowData = {IdKategori, NamaKategori, deskripsiKategori};
+                    Object[] rowData = {IdMeja, NomorMeja};
                     model.addRow(rowData);// Tambahkan hasil pencarian ke dalam JTable
                 }
             }

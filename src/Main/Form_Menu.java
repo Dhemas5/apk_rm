@@ -4,6 +4,47 @@
  */
 package Main;
 
+import Config.Koneksi_dua;
+import Palette.Custom_ButtonRounded;
+import Palette.JTable_Custom;
+import Palette.JTextareaRounded;
+import Palette.JTextfieldRounded;
+import java.awt.CardLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.LayoutStyle;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author mahar
@@ -11,10 +52,23 @@ package Main;
 public class Form_Menu extends javax.swing.JPanel {
 
     /**
-     * Creates new form Form_Menu
+     * Creates new form Form_Pelanggan
      */
+    private int HalamanSaatIni = 1;
+    private int DataperHalaman = 14;
+    private int totalpages;
+
+    private final Connection con;// Koneksi database
+    
+    private String IdKategori;
+
     public Form_Menu() {
-        initComponents();
+        con = Koneksi_dua.con();
+        initComponents(); // Inisialisasi komponen GUI
+        loadData(); // Memuat data pelanggan ke dalam JTable
+        setTabelModel(); // Mengatur model tabel (misalnya, kolom-kolomnya)
+        resetForm(); // Mereset form input menjadi kosong
+//        pagination(); // Mengatur paginasi untuk tampilan data
     }
 
     /**
@@ -26,48 +80,1014 @@ public class Form_Menu extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        main_panel = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
+        rbJenisKelamin = new ButtonGroup();
+        main_panel = new JPanel();
+        panelView = new JPanel();
+        jLabel1 = new JLabel();
+        btn_tambah = new Custom_ButtonRounded();
+        btn_cancel = new Custom_ButtonRounded();
+        btn_hapus = new Custom_ButtonRounded();
+        jScrollPane1 = new JScrollPane();
+        tbl_data = new JTable_Custom();
+        jLabel3 = new JLabel();
+        jLabel4 = new JLabel();
+        jLabel5 = new JLabel();
+        btn_first = new Custom_ButtonRounded();
+        btn_before = new Custom_ButtonRounded();
+        cbx_data = new JComboBox<>();
+        btn_next = new Custom_ButtonRounded();
+        btn_last = new Custom_ButtonRounded();
+        lb_halaman = new JLabel();
+        txt_search = new JTextfieldRounded();
+        panelAdd = new JPanel();
+        jLabel2 = new JLabel();
+        btn_simpan = new Custom_ButtonRounded();
+        btn_batal_add = new Custom_ButtonRounded();
+        jLabel6 = new JLabel();
+        jLabel7 = new JLabel();
+        jLabel8 = new JLabel();
+        jLabel9 = new JLabel();
+        txt_nama = new JTextfieldRounded();
+        jLabel10 = new JLabel();
+        txt_id = new JTextfieldRounded();
+        txt_barcode = new JTextfieldRounded();
+        jLabel13 = new JLabel();
+        jLabel14 = new JLabel();
+        cbx_kategori = new JComboBox<>();
+        txt_harga = new JTextfieldRounded();
+        jLabel15 = new JLabel();
+        jLabel16 = new JLabel();
+        txt_deskripsi = new JTextfieldRounded();
+        jLabel17 = new JLabel();
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        setLayout(new CardLayout());
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 876, Short.MAX_VALUE)
+        main_panel.setLayout(new CardLayout());
+
+        panelView.setBackground(new Color(255, 255, 255));
+
+        jLabel1.setFont(new Font("SansSerif", 1, 24)); // NOI18N
+        jLabel1.setText("Data Menu");
+
+        btn_tambah.setIcon(new ImageIcon(getClass().getResource("/Icons/Plus.png"))); // NOI18N
+        btn_tambah.setText("Tambah");
+        btn_tambah.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                btn_tambahActionPerformed(evt);
+            }
+        });
+
+        btn_cancel.setIcon(new ImageIcon(getClass().getResource("/Icons/Close5.png"))); // NOI18N
+        btn_cancel.setText("Batal");
+        btn_cancel.setFillClick(new Color(102, 204, 255));
+        btn_cancel.setFillOriginal(new Color(0, 204, 204));
+        btn_cancel.setFillOver(new Color(0, 153, 153));
+        btn_cancel.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                btn_cancelActionPerformed(evt);
+            }
+        });
+
+        btn_hapus.setIcon(new ImageIcon(getClass().getResource("/Icons/Delete.png"))); // NOI18N
+        btn_hapus.setText("Hapus");
+        btn_hapus.setFillClick(new Color(153, 0, 51));
+        btn_hapus.setFillOriginal(new Color(255, 0, 51));
+        btn_hapus.setFillOver(new Color(204, 0, 51));
+        btn_hapus.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                btn_hapusActionPerformed(evt);
+            }
+        });
+
+        tbl_data.setModel(new DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tbl_data.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent evt) {
+                tbl_dataMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tbl_data);
+
+        jLabel3.setIcon(new ImageIcon(getClass().getResource("/Icons/Food Bar1.png"))); // NOI18N
+
+        jLabel4.setIcon(new ImageIcon(getClass().getResource("/Icons/Food Bar1.png"))); // NOI18N
+
+        jLabel5.setFont(new Font("Times New Roman", 1, 18)); // NOI18N
+        jLabel5.setIcon(new ImageIcon(getClass().getResource("/Icons/Sorting.png"))); // NOI18N
+        jLabel5.setText(" >");
+
+        btn_first.setText("First Page");
+        btn_first.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                btn_firstActionPerformed(evt);
+            }
+        });
+
+        btn_before.setText("<");
+        btn_before.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                btn_beforeActionPerformed(evt);
+            }
+        });
+
+        cbx_data.setModel(new DefaultComboBoxModel<>(new String[] { "8", "16", "32", " " }));
+        cbx_data.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                cbx_dataActionPerformed(evt);
+            }
+        });
+
+        btn_next.setText(">");
+        btn_next.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                btn_nextActionPerformed(evt);
+            }
+        });
+
+        btn_last.setText("Last Page");
+        btn_last.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                btn_lastActionPerformed(evt);
+            }
+        });
+
+        lb_halaman.setFont(new Font("SansSerif", 1, 16)); // NOI18N
+        lb_halaman.setForeground(new Color(153, 153, 153));
+        lb_halaman.setText("Halaman of Total Halaman");
+
+        txt_search.setText("Search");
+        txt_search.addKeyListener(new KeyAdapter() {
+            public void keyTyped(KeyEvent evt) {
+                txt_searchKeyTyped(evt);
+            }
+        });
+
+        GroupLayout panelViewLayout = new GroupLayout(panelView);
+        panelView.setLayout(panelViewLayout);
+        panelViewLayout.setHorizontalGroup(panelViewLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(GroupLayout.Alignment.TRAILING, panelViewLayout.createSequentialGroup()
+                .addGroup(panelViewLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                    .addGroup(panelViewLayout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel3))
+                    .addGroup(GroupLayout.Alignment.LEADING, panelViewLayout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addGroup(panelViewLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1)
+                            .addGroup(panelViewLayout.createSequentialGroup()
+                                .addComponent(btn_tambah, GroupLayout.PREFERRED_SIZE, 106, GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btn_hapus, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btn_cancel, GroupLayout.PREFERRED_SIZE, 93, GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txt_search, GroupLayout.PREFERRED_SIZE, 219, GroupLayout.PREFERRED_SIZE)))))
+                .addGap(12, 12, 12))
+            .addGroup(GroupLayout.Alignment.TRAILING, panelViewLayout.createSequentialGroup()
+                .addContainerGap(356, Short.MAX_VALUE)
+                .addGroup(panelViewLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addGroup(GroupLayout.Alignment.TRAILING, panelViewLayout.createSequentialGroup()
+                        .addComponent(lb_halaman)
+                        .addGap(384, 384, 384))
+                    .addGroup(GroupLayout.Alignment.TRAILING, panelViewLayout.createSequentialGroup()
+                        .addComponent(btn_first, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_before, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbx_data, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_next, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_last, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
+                        .addGap(337, 337, 337))))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 570, Short.MAX_VALUE)
+        panelViewLayout.setVerticalGroup(panelViewLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(GroupLayout.Alignment.TRAILING, panelViewLayout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addGroup(panelViewLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel3, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addGap(35, 35, 35)
+                .addGroup(panelViewLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_tambah, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_cancel, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_hapus, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_search, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 292, GroupLayout.PREFERRED_SIZE)
+                .addGap(17, 17, 17)
+                .addComponent(lb_halaman)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(panelViewLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_first, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_before, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbx_data, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_next, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_last, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout main_panelLayout = new javax.swing.GroupLayout(main_panel);
-        main_panel.setLayout(main_panelLayout);
-        main_panelLayout.setHorizontalGroup(
-            main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        main_panel.add(panelView, "card2");
+
+        panelAdd.setBackground(new Color(255, 255, 255));
+
+        jLabel2.setFont(new Font("SansSerif", 1, 24)); // NOI18N
+        jLabel2.setText("Tambah Data");
+
+        btn_simpan.setIcon(new ImageIcon(getClass().getResource("/Icons/Paper Plane.png"))); // NOI18N
+        btn_simpan.setText("Simpan");
+        btn_simpan.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                btn_simpanActionPerformed(evt);
+            }
+        });
+
+        btn_batal_add.setIcon(new ImageIcon(getClass().getResource("/Icons/Close5.png"))); // NOI18N
+        btn_batal_add.setText("Batal");
+        btn_batal_add.setFillClick(new Color(153, 51, 0));
+        btn_batal_add.setFillOriginal(new Color(255, 153, 51));
+        btn_batal_add.setFillOver(new Color(204, 102, 0));
+        btn_batal_add.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                btn_batal_addActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setIcon(new ImageIcon(getClass().getResource("/Icons/Food Bar1.png"))); // NOI18N
+
+        jLabel7.setIcon(new ImageIcon(getClass().getResource("/Icons/Food Bar1.png"))); // NOI18N
+
+        jLabel8.setFont(new Font("Times New Roman", 1, 18)); // NOI18N
+        jLabel8.setIcon(new ImageIcon(getClass().getResource("/Icons/Sorting.png"))); // NOI18N
+        jLabel8.setText(" >");
+
+        jLabel9.setFont(new Font("SansSerif", 1, 14)); // NOI18N
+        jLabel9.setText("ID Menu");
+
+        txt_nama.setText("Nama Menu");
+
+        jLabel10.setFont(new Font("SansSerif", 1, 14)); // NOI18N
+        jLabel10.setText("Nama Menu");
+
+        txt_id.setText("ID Menu");
+
+        txt_barcode.setText("Barcode");
+
+        jLabel13.setFont(new Font("SansSerif", 1, 14)); // NOI18N
+        jLabel13.setText("Barcode");
+
+        jLabel14.setFont(new Font("SansSerif", 1, 14)); // NOI18N
+        jLabel14.setText("Kategori");
+
+        cbx_kategori.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                cbx_kategoriActionPerformed(evt);
+            }
+        });
+
+        txt_harga.setText("Harga");
+
+        jLabel15.setFont(new Font("SansSerif", 1, 14)); // NOI18N
+        jLabel15.setText("Deskripsi");
+
+        jLabel16.setFont(new Font("SansSerif", 1, 14)); // NOI18N
+        jLabel16.setText("Harga");
+
+        txt_deskripsi.setText("Deskripsi");
+
+        jLabel17.setFont(new Font("SansSerif", 1, 12)); // NOI18N
+        jLabel17.setForeground(new Color(51, 204, 255));
+        jLabel17.setText("Id");
+
+        GroupLayout panelAddLayout = new GroupLayout(panelAdd);
+        panelAdd.setLayout(panelAddLayout);
+        panelAddLayout.setHorizontalGroup(panelAddLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(panelAddLayout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addGroup(panelAddLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addGroup(panelAddLayout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel7)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel8)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel6)
+                        .addGap(12, 12, 12))
+                    .addGroup(panelAddLayout.createSequentialGroup()
+                        .addGroup(panelAddLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                            .addGroup(panelAddLayout.createSequentialGroup()
+                                .addComponent(btn_simpan, GroupLayout.PREFERRED_SIZE, 106, GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btn_batal_add, GroupLayout.PREFERRED_SIZE, 93, GroupLayout.PREFERRED_SIZE))
+                            .addGroup(panelAddLayout.createSequentialGroup()
+                                .addGroup(panelAddLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel13)
+                                    .addComponent(jLabel9)
+                                    .addComponent(txt_id, GroupLayout.PREFERRED_SIZE, 358, GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txt_barcode, GroupLayout.PREFERRED_SIZE, 358, GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel16)
+                                    .addComponent(txt_harga, GroupLayout.PREFERRED_SIZE, 358, GroupLayout.PREFERRED_SIZE))
+                                .addGap(88, 88, 88)
+                                .addGroup(panelAddLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                    .addComponent(txt_deskripsi, GroupLayout.PREFERRED_SIZE, 358, GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel15)
+                                    .addGroup(panelAddLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jLabel10)
+                                        .addComponent(txt_nama, GroupLayout.DEFAULT_SIZE, 358, Short.MAX_VALUE)
+                                        .addGroup(panelAddLayout.createSequentialGroup()
+                                            .addComponent(jLabel14)
+                                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(jLabel17, GroupLayout.PREFERRED_SIZE, 66, GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(cbx_kategori, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                        .addGap(0, 169, Short.MAX_VALUE))))
         );
-        main_panelLayout.setVerticalGroup(
-            main_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        panelAddLayout.setVerticalGroup(panelAddLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(panelAddLayout.createSequentialGroup()
+                .addGroup(panelAddLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addGroup(panelAddLayout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addGroup(panelAddLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel6, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8))
+                        .addGap(29, 29, 29)
+                        .addComponent(jLabel9)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txt_id, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelAddLayout.createSequentialGroup()
+                        .addGap(76, 76, 76)
+                        .addComponent(jLabel10)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txt_nama, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+                .addGroup(panelAddLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                    .addGroup(panelAddLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel13)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txt_barcode, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelAddLayout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addGroup(panelAddLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel14)
+                            .addComponent(jLabel17))
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cbx_kategori)))
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(panelAddLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel16)
+                    .addComponent(jLabel15))
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelAddLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_harga, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_deskripsi, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(panelAddLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_simpan, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_batal_add, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(199, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(main_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(main_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        main_panel.add(panelAdd, "card2");
+
+        add(main_panel, "card2");
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_hapusActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btn_hapusActionPerformed
+        hapusData();
+    }//GEN-LAST:event_btn_hapusActionPerformed
+
+    private void btn_tambahActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btn_tambahActionPerformed
+        main_panel.removeAll();
+        main_panel.add(panelAdd);// Beralih ke panel tambah/edit
+        main_panel.repaint();
+        main_panel.revalidate();
+
+        try {
+            txt_id.setText(setIDMenu()); // Menyiapkan ID pelanggan baru secara otomatis
+            if (btn_tambah.getText().equals("UBAH")) { // Jika tombol menunjukkan "UBAH"
+                dataTabel(); // Memuat data pelanggan yang dipilih ke form
+                btn_simpan.setText("PERBARUI"); // Ubah teks tombol simpan menjadi perbarui
+            } else {
+                btn_simpan.setText("SIMPAN"); // Jika menambah data, tombol tetap "SIMPAN"
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(Form_Menu.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }//GEN-LAST:event_btn_tambahActionPerformed
+
+    private void btn_firstActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btn_firstActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_firstActionPerformed
+
+    private void btn_beforeActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btn_beforeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_beforeActionPerformed
+
+    private void btn_nextActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btn_nextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_nextActionPerformed
+
+    private void btn_lastActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btn_lastActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_lastActionPerformed
+
+    private void cbx_dataActionPerformed(ActionEvent evt) {//GEN-FIRST:event_cbx_dataActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbx_dataActionPerformed
+
+    private void btn_cancelActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btn_cancelActionPerformed
+        showPanel();
+        loadData();
+    }//GEN-LAST:event_btn_cancelActionPerformed
+
+    private void tbl_dataMouseClicked(MouseEvent evt) {//GEN-FIRST:event_tbl_dataMouseClicked
+        btn_tambah.setText("UBAH"); // Ubah tombol tambah menjadi "UBAH"
+        btn_simpan.setText("PERBARUI"); // Ubah tombol simpan menjadi "PERBARUI"
+        btn_cancel.setVisible(true); // Tampilkan tombol batal
+        btn_hapus.setVisible(true); // Tampilkan tombol hapus
+    }//GEN-LAST:event_tbl_dataMouseClicked
+
+    private void txt_searchKeyTyped(KeyEvent evt) {//GEN-FIRST:event_txt_searchKeyTyped
+        searchData(); // Memanggil fungsi searchData() untuk mencari data berdasarkan kata kunci
+    }//GEN-LAST:event_txt_searchKeyTyped
+
+    private void btn_batal_addActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btn_batal_addActionPerformed
+        showPanel();// Kembali ke panel utama
+        loadData();// Refresh data di JTable
+    }//GEN-LAST:event_btn_batal_addActionPerformed
+
+    private void btn_simpanActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btn_simpanActionPerformed
+        if (btn_simpan.getText().equals("SIMPAN")) {
+            insertData(); // Menyimpan data baru ke database
+        } else if (btn_simpan.getText().equals("PERBARUI")) {
+            updateData(); // Memperbarui data pelanggan yang sudah ada
+        }
+    }//GEN-LAST:event_btn_simpanActionPerformed
+
+    private void cbx_kategoriActionPerformed(ActionEvent evt) {//GEN-FIRST:event_cbx_kategoriActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbx_kategoriActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel main_panel;
+    private Custom_ButtonRounded btn_batal_add;
+    private Custom_ButtonRounded btn_before;
+    private Custom_ButtonRounded btn_cancel;
+    private Custom_ButtonRounded btn_first;
+    private Custom_ButtonRounded btn_hapus;
+    private Custom_ButtonRounded btn_last;
+    private Custom_ButtonRounded btn_next;
+    private Custom_ButtonRounded btn_simpan;
+    private Custom_ButtonRounded btn_tambah;
+    private JComboBox<String> cbx_data;
+    private JComboBox<String> cbx_kategori;
+    private JLabel jLabel1;
+    private JLabel jLabel10;
+    private JLabel jLabel13;
+    private JLabel jLabel14;
+    private JLabel jLabel15;
+    private JLabel jLabel16;
+    private JLabel jLabel17;
+    private JLabel jLabel2;
+    private JLabel jLabel3;
+    private JLabel jLabel4;
+    private JLabel jLabel5;
+    private JLabel jLabel6;
+    private JLabel jLabel7;
+    private JLabel jLabel8;
+    private JLabel jLabel9;
+    private JScrollPane jScrollPane1;
+    private JLabel lb_halaman;
+    private JPanel main_panel;
+    private JPanel panelAdd;
+    private JPanel panelView;
+    private ButtonGroup rbJenisKelamin;
+    private JTable_Custom tbl_data;
+    private JTextfieldRounded txt_barcode;
+    private JTextfieldRounded txt_deskripsi;
+    private JTextfieldRounded txt_harga;
+    private JTextfieldRounded txt_id;
+    private JTextfieldRounded txt_nama;
+    private JTextfieldRounded txt_search;
     // End of variables declaration//GEN-END:variables
+  // paginationKonsol() - Mengatur fungsi pagination untuk Konsol
+    private void paginationKonsol() {
+        // Mengatur tombol halaman pertama
+        btn_first.addActionListener(e -> {
+            HalamanSaatIni = 1;// Set ke halaman pertama
+            loadData(); // Memuat data pada halaman pertama
+        });
+
+        // Mengatur tombol halaman sebelumnya
+        btn_before.addActionListener(e -> {
+            if (HalamanSaatIni > 1) {// Memastikan halaman saat ini lebih dari 1
+                HalamanSaatIni--; // Turun ke halaman sebelumnya
+                loadData();// Memuat data pada halaman saat ini
+            }
+        });
+
+        // Mengatur combo box untuk jumlah data per halaman
+        cbx_data.addActionListener(e -> {
+            DataperHalaman = Integer.parseInt(cbx_data.getSelectedItem().toString());// Mengambil jumlah data per halaman dari combo box
+            HalamanSaatIni = 1;// Set ke halaman pertama setiap kali data per halaman diubah
+            loadData(); //Memuat data
+        });
+
+        // Mengatur tombol halaman berikutnya
+        btn_next.addActionListener(e -> {
+            if (HalamanSaatIni < totalpages) {// Memastikan belum di halaman terakhir
+                HalamanSaatIni++;// Naik ke halaman berikutnya
+                loadData();//Memuat data pada halaman baru
+            }
+        });
+
+        // Mengatur tombol halaman terakhir
+        btn_last.addActionListener(e -> {
+            HalamanSaatIni = totalpages;// Set ke halaman terakhir
+            loadData();// Memuat data pada halaman terakhir
+        });
+
+    }
+
+    //button tambah, simpan, hapus, cancel, search, TableMouseclick
+    private void actionButton() {
+        // Mengatur tombol halaman pertama
+        btn_tambah.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                main_panel.removeAll();
+                main_panel.add(panelAdd);// Beralih ke panel tambah/edit
+                main_panel.repaint();
+                main_panel.revalidate();
+
+                try {
+                    txt_id.setText(setIDMenu());
+                    if (btn_tambah.getText().equals("UBAH")) {
+                        dataTabel();
+                        btn_simpan.setText("PERBARUI");
+                    } else {
+                        btn_simpan.setText("SIMPAN");
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(Form_Menu.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            }
+        });
+
+        btn_simpan.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (btn_simpan.getText().equals("SIMPAN")) {
+                    insertData(); // Menyimpan data baru ke database
+                } else if (btn_simpan.getText().equals("PERBARUI")) {
+                    updateData(); // Memperbarui data Konsol yang sudah ada
+                }
+            }
+        });
+
+        btn_hapus.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                hapusData();// Memanggil fungsi hapusData() untuk menghapus data yang dipilih
+            }
+        });
+
+        btn_cancel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showPanel(); // Kembali ke panel utama
+                loadData(); // Refresh data di JTable
+            }
+        });
+
+        btn_batal_add.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showPanel();// Kembali ke panel utama
+                loadData();// Refresh data di JTable
+            }
+        });
+
+        txt_search.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                searchData(); // Memanggil fungsi searchData() untuk mencari data berdasarkan kata kunci
+            }
+        });
+
+        tbl_data.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                btn_tambah.setText("UBAH"); // Ubah tombol tambah menjadi "UBAH"
+                btn_simpan.setText("PERBARUI"); // Ubah tombol simpan menjadi "PERBARUI"
+                btn_cancel.setVisible(true); // Tampilkan tombol batal
+                btn_hapus.setVisible(true); // Tampilkan tombol hapus
+            }
+        });
+    }
+
+    // calculateTotalPage() - Menghitung total halaman berdasarkan jumlah data dan data per halaman
+    private void calculateTotalPage() {
+        int totalData = getTotalData();// Mendapatkan total data Konsol
+        totalpages = (int) Math.ceil((double) totalData / DataperHalaman);// Menghitung total halaman
+    }
+
+    // getTotalData() - Mendapatkan total data Konsol dari database
+    private int getTotalData() {
+        int totalData = 0;
+        try {
+            String sql = "SELECT COUNT(*) AS total FROM tbl_menu";// Query menghitung total data Konsol
+            try (PreparedStatement st = con.prepareStatement(sql)) {
+                ResultSet rs = st.executeQuery(); // Eksekusi query
+                if (rs.next()) {
+                    totalData = rs.getInt("total");// Mendapatkan jumlah total dari kolom "total"
+                }
+            }
+        } catch (Exception e) {
+            Logger.getLogger(Form_Menu.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return totalData;// Mengembalikan jumlah data
+    }
+
+    // loadData() - Memuat data Konsol ke dalam JTable berdasarkan halaman saat ini
+    private void loadData() {
+        getKategori();
+        calculateTotalPage();// Menghitung total halaman
+        int totalData = getTotalData();// Mendapatkan total data Konsol
+        lb_halaman.setText(String.valueOf("Halaman " + HalamanSaatIni + " Dari total data " + totalData)); // Menampilkan halaman saat ini
+
+        int startIndex = (HalamanSaatIni - 1) * DataperHalaman;// Menentukan indeks awal data berdasarkan halaman saat ini
+        getData(startIndex, DataperHalaman, (DefaultTableModel) tbl_data.getModel());// Mendapatkan data untuk ditampilkan di tabel
+        btn_hapus.setVisible(false); // Menyembunyikan tombol hapus
+        btn_cancel.setVisible(false); // Menyembunyikan tombol batal
+    }
+
+    // showPanel() - Mengatur tampilan panel utama
+    private void showPanel() {
+        main_panel.removeAll();// Menghapus semua komponen di panel utama
+        main_panel.add(new Form_Menu());// Menambahkan panel Form_Menu ke panel utama
+        main_panel.repaint();// Menggambar ulang panel utama
+        main_panel.revalidate();// Memastikan perubahan diterapkan
+    }
+
+    // resetForm() - Mengosongkan input form Konsol
+    private void resetForm() {
+        txt_id.setText(""); // Mengosongkan teks ID
+        txt_nama.setText(""); // Mengosongkan teks Nama Konsol
+        txt_barcode.setText(""); // Mengosongkan harga per jam
+        txt_harga.setText(""); // Mengosongkan harga per hari
+        txt_deskripsi.setText(""); // Mengosongkan kategori
+    }
+
+    // setTabelModel() - Mengatur model tabel dengan kolom-kolom yang sesuai
+    private void setTabelModel() {
+        String[] columnNames = {
+            "ID Menu",
+            "Kategori",
+            "Barcode",
+            "Nama",
+            "Harga",
+            "Deskrpsi"
+        };
+        DefaultTableModel model = new DefaultTableModel(columnNames, 0); // Membuat model tabel dengan kolom yang ditentukan
+        tbl_data.setModel(model); // Mengatur model tabel untuk JTable
+        loadData(); // Memuat data ke dalam tabel
+    }
+
+    // getData() - Mendapatkan data Konsol dari database dengan batasan jumlah data per halaman
+    private void getData(int startIndex, int entriesPage, DefaultTableModel model) {
+        model.setRowCount(0); // Mengosongkan data yang ada di tabel
+
+        try {
+            String sql = "SELECT tbl_menu.ID_Menu, tbl_menu.Barcode, tbl_menu.Nama_Menu, tbl_menu.Harga, tbl_menu.Deskripsi, "
+                    + "tbl_kategori.ID_Kategori, tbl_kategori.Nama_Kategori "
+                    + "FROM tbl_menu "
+                    + "INNER JOIN tbl_kategori ON tbl_kategori.ID_Kategori = tbl_menu.ID_Kategori "
+                    + "ORDER BY tbl_menu.ID_Menu DESC LIMIT ?, ?";
+            // Query dengan limit berdasarkan halaman
+            try (PreparedStatement st = con.prepareStatement(sql)) {
+                st.setInt(1, startIndex); // Indeks awal
+                st.setInt(2, entriesPage); // Jumlah data per halaman
+                ResultSet rs = st.executeQuery(); // Eksekusi query
+
+                while (rs.next()) {
+                    String IdMenu = rs.getString("ID_Menu");
+                    String NamaKategori = rs.getString("Nama_Kategori");
+                    String Barcode = rs.getString("Barcode");
+                    String NamaMenu = rs.getString("Nama_Menu");
+                    String Harga = rs.getString("Harga");
+                    String Deskripsi = rs.getString("Deskripsi");
+
+                    Object[] rowData = {IdMenu, NamaKategori, Barcode, NamaMenu, Harga, Deskripsi}; // Data Konsol
+                    model.addRow(rowData); // Menambahkan baris data ke dalam tabel
+                }
+            }
+        } catch (Exception e) {
+            Logger.getLogger(Form_Menu.class.getName()).log(Level.SEVERE, null, e);
+
+        }
+    }
+
+    // setIDMenu() - Mengatur ID Konsol secara otomatis
+    private String setIDMenu() throws SQLException {
+        String urutan = null;
+        Date now = new Date();
+        SimpleDateFormat noFormat = new SimpleDateFormat("yyMM"); // Format tanggal sebagai bagian dari ID
+        String no = noFormat.format(now);
+
+        String sql = "SELECT RIGHT(ID_Menu, 3) AS Nomor FROM tbl_menu WHERE ID_Menu LIKE '" + no + "%' ORDER BY ID_Menu DESC LIMIT 1";
+
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            ResultSet rs = st.executeQuery(); // Eksekusi query
+
+            if (rs.next()) {
+                int nomor = Integer.parseInt(rs.getString("Nomor")) + 1; // Menambah nomor urut
+                urutan = no + String.format("%03d", nomor); // Format ID baru (tanpa "KSL")
+            } else {
+                urutan = no + "001"; // ID awal jika tidak ada data (tanpa "KSL")
+            }
+        } catch (SQLException e) {
+            java.util.logging.Logger.getLogger(Form_Menu.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return urutan;
+    }
+
+    private Map<String, String> kategoriMap = new HashMap<>(); // Menyimpan Nama_Kategori → ID_Kategori
+
+    private void getKategori() {
+        try {
+            DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+            model.addElement("Pilih Kategori");
+            kategoriMap.clear();
+
+            String sql = "SELECT ID_Kategori, Nama_Kategori FROM tbl_kategori";
+            PreparedStatement st = con.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                String id = rs.getString("ID_Kategori");
+                String nama = rs.getString("Nama_Kategori");
+                kategoriMap.put(nama, id); // Simpan pasangan Nama → ID
+                model.addElement(nama);
+            }
+
+            cbx_kategori.setModel(model);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Listener untuk combo box (ditempatkan setelah data dimuat)
+        cbx_kategori.addActionListener(e -> {
+            String selected = (String) cbx_kategori.getSelectedItem();
+            if (kategoriMap.containsKey(selected)) {
+                IdKategori = kategoriMap.get(selected);
+            } else {
+                IdKategori = ""; // Reset jika "Pilih Kategori" dipilih
+            }
+        });
+    }
+
+    // insertData() - Menambahkan data Konsol ke database
+    private void insertData() {
+        String IdMenu = txt_id.getText();
+        String Barcode = txt_barcode.getText();
+        String NamaMenu = txt_nama.getText();
+        String Harga = txt_harga.getText();
+        String Deskripsi = txt_deskripsi.getText();
+        String NamaKategoriDipilih = cbx_kategori.getSelectedItem().toString();
+        String IdKategori = "";
+
+        // Validasi
+        if (IdMenu.isEmpty() || Barcode.isEmpty() || NamaMenu.isEmpty() || Harga.isEmpty() || Deskripsi.isEmpty() || NamaKategoriDipilih.equals("Pilih Kategori")) {
+            JOptionPane.showMessageDialog(this, "Semua Kolom Harus Diisi!", "Validasi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Ambil ID_Kategori dari database berdasarkan nama kategori
+        try {
+            String queryKategori = "SELECT ID_Kategori FROM tbl_kategori WHERE Nama_Kategori = ?";
+            try (PreparedStatement ps = con.prepareStatement(queryKategori)) {
+                ps.setString(1, NamaKategoriDipilih);
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    IdKategori = rs.getString("ID_Kategori");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Kategori tidak ditemukan di database!", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }
+
+            // Lanjutkan ke proses insert
+            String sql = "INSERT INTO tbl_menu (ID_Menu, ID_Kategori, Barcode, Nama_Menu, Harga, Deskripsi) VALUES (?, ?, ?, ?, ?, ?)";
+            try (PreparedStatement st = con.prepareStatement(sql)) {
+                st.setString(1, IdMenu);
+                st.setString(2, IdKategori); // sudah valid (ID angka atau kode)
+                st.setString(3, Barcode);
+                st.setString(4, NamaMenu);
+                st.setString(5, Harga);
+                st.setString(6, Deskripsi);
+
+                int rowInserted = st.executeUpdate();
+                if (rowInserted > 0) {
+                    JOptionPane.showMessageDialog(this, "Data Berhasil Ditambahkan");
+                    resetForm();
+                    loadData();
+                    showPanel();
+                }
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(Form_Menu.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+
+    // dataTabel() - Menampilkan data Konsol dari JTable ke dalam form untuk diperbarui
+    private void dataTabel() {
+        panelView.setVisible(false); // Menyembunyikan panel view
+        panelAdd.setVisible(true); // Menampilkan panel tambah/edit
+
+        int row = tbl_data.getSelectedRow(); // Mendapatkan baris yang dipilih pada tabel
+        jLabel2.setText("Perbarui Data"); // Mengubah teks label menjadi "PERBARUI DATA Konsol"
+        txt_id.setEnabled(false); // Menonaktifkan field ID Konsol agar tidak bisa diedit
+        String id = tbl_data.getModel().getValueAt(row, 0).toString();
+
+        // Mengisi field form dengan data dari baris yang dipilih
+        txt_id.setText(tbl_data.getValueAt(row, 0).toString());
+        IdKategori = tbl_data.getModel().getValueAt(row, 1).toString();
+        txt_barcode.setText(tbl_data.getValueAt(row, 2).toString());
+        txt_nama.setText(tbl_data.getValueAt(row, 3).toString());
+        txt_harga.setText(tbl_data.getValueAt(row, 4).toString());
+        txt_deskripsi.setText(tbl_data.getValueAt(row, 5).toString());
+
+        getKategoriID(IdKategori);
+    }
+
+    private void getKategoriID(String id) {
+        try {
+            String sql = "SELECT ID_Kategori, Nama_Kategori FROM tbl_kategori";
+            PreparedStatement st = con.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                String IdKtg = rs.getString("ID_Kategori");
+                String NamaKtg = rs.getString("Nama_Kategori");
+
+                if (id.equals(IdKategori)) {
+                    jLabel17.setText(IdKtg);
+                    cbx_kategori.setSelectedItem(NamaKtg);
+                }
+            }
+
+            cbx_kategori.addItemListener(new ItemListener() {
+                @Override
+                public void itemStateChanged(ItemEvent e) {
+                    if (e.getStateChange() == ItemEvent.SELECTED) {
+                        String selectedKtg = (String) cbx_kategori.getSelectedItem().toString();
+                        updateKategoriID(selectedKtg);
+                    }
+                }
+
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void updateKategoriID(String selectedKtg) {
+        try {
+            String sql = "SELECT ID_Kategori, Nama_Kategori FROM tbl_kategori WHERE Nama_Kategori = ?";
+            PreparedStatement st = con.prepareStatement(sql);
+            st.setString(1, selectedKtg);
+            ResultSet rs = st.executeQuery();
+
+            if (rs.next()) {
+                String IdKtg = rs.getString("ID_Kategori");
+                jLabel17.setText(IdKtg);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // updateData() - Memperbarui data Konsol di database
+    private void updateData() {
+        String IdMenu = txt_id.getText();
+        String Barcode = txt_barcode.getText();
+        String NamaMenu = txt_nama.getText();
+        String Harga = txt_harga.getText();
+        String Deskripsi = txt_deskripsi.getText();
+
+        // Validasi input data
+        if (IdMenu.isEmpty() || Barcode.isEmpty() || NamaMenu.isEmpty() || Harga.isEmpty() || Deskripsi.isEmpty() || cbx_kategori.getSelectedItem().toString().equals("Pilih Kategori")) {
+            JOptionPane.showMessageDialog(this, "Semua Kolom Harus Dipilih dan Diisi!", "Validasi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Update data ke database
+        try {
+            // Memperbaiki query untuk memasukkan nilai Stock, Status, HargaPerjam, dan HargaPerhari
+            String sql = "UPDATE tbl_menu SET Barcode=?, Nama_Menu=?, Harga=?, Deskripsi=?, ID_Kategori=? WHERE ID_Menu=?";
+            try (PreparedStatement st = con.prepareStatement(sql)) {
+                st.setString(1, Barcode);
+                st.setString(2, NamaMenu);
+                st.setString(3, Harga);
+                st.setString(4, Deskripsi);
+                st.setString(5, IdKategori); // atau gunakan IDKategori jika sudah disimpan sebelumnya
+                st.setString(6, IdMenu);
+
+                int rowUpdated = st.executeUpdate(); // Menjalankan perintah update
+                if (rowUpdated > 0) {
+                    JOptionPane.showMessageDialog(this, "Data Berhasil Diperbarui");
+                    resetForm(); // Kosongkan form setelah data diperbarui
+                    loadData();  // Refresh data di JTable
+                    showPanel(); // Tampilkan panel utama
+                }
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(Form_Menu.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+
+    // hapusData() - Menghapus data Konsol dari database
+    private void hapusData() {
+        int row = tbl_data.getSelectedRow();// Mendapatkan baris yang dipilih
+        String IdMenu = tbl_data.getValueAt(row, 0).toString();// Mendapatkan ID Konsol dari baris yang dipilih
+
+        // Konfirmasi penghapusan
+        int confirm = JOptionPane.showConfirmDialog(this, "Apakah Anda Yakin Menghapus Data Ini?", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+        if (confirm == JOptionPane.YES_OPTION) {
+            try {
+                String sql = "DELETE FROM tbl_menu WHERE ID_Menu=?";
+                try (PreparedStatement st = con.prepareStatement(sql)) {
+                    st.setString(1, IdMenu);
+
+                    int rowDeleted = st.executeUpdate();// Eksekusi penghapusan
+                    if (rowDeleted > 0) {
+                        JOptionPane.showMessageDialog(this, "Data Berhasil Dihapus");
+                        loadData();// Refresh data di JTable
+                    }
+                }
+            } catch (SQLException e) {
+                Logger.getLogger(Form_Menu.class.getName()).log(Level.SEVERE, null, e);
+            }
+        }
+    }
+
+    // searchData() - Mencari data Konsol berdasarkan nama atau alamat
+    private void searchData() {
+        String kataKunci = txt_search.getText(); // Mengambil kata kunci dari text field pencarian
+
+        DefaultTableModel model = (DefaultTableModel) tbl_data.getModel();
+        model.setRowCount(0); // Mengosongkan data di tabel sebelum memuat hasil pencarian
+
+        try {
+            // Modifikasi query untuk mencakup pencarian berdasarkan Nama_Menu dan Stock
+            String sql = "SELECT tbl_menu.ID_Menu, tbl_menu.Barcode, tbl_menu.Nama_Menu, tbl_menu.Harga, tbl_menu.Deskripsi, "
+                    + "tbl_kategori.ID_Kategori, tbl_kategori.Nama_Kategori "
+                    + "FROM tbl_menu "
+                    + "INNER JOIN tbl_kategori ON tbl_kategori.ID_Kategori = tbl_menu.ID_Kategori "
+                    + "WHERE tbl_menu.Nama_Menu Like ? OR tbl_menu.Deskripsi Like ?";
+            try (PreparedStatement st = con.prepareStatement(sql)) {
+                // Menambahkan parameter pencarian pada kolom Nama_Menu dan Stock
+                st.setString(1, "%" + kataKunci + "%");
+                st.setString(2, "%" + kataKunci + "%"); // Menambahkan pencarian berdasarkan Stock
+
+                ResultSet rs = st.executeQuery();
+
+                while (rs.next()) {
+                    String IdMenu = rs.getString("ID_Menu");
+                    String NamaKategori = rs.getString("Nama_Kategori");
+                    String Barcode = rs.getString("Barcode");
+                    String NamaMenu = rs.getString("Nama_Menu");
+                    String Harga = rs.getString("Harga");
+                    String Deskripsi = rs.getString("Deskripsi");
+
+                    // Menambahkan hasil pencarian ke dalam JTable
+                    Object[] rowData = {IdMenu, NamaMenu, NamaKategori, Barcode, NamaMenu, Harga, Deskripsi};
+                    model.addRow(rowData);
+                }
+            }
+        } catch (Exception e) {
+            Logger.getLogger(Form_Menu.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
 }
